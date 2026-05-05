@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #10141b;
+  --bg-elevated: #171f28;
+  --surface: #1f2b35;
+  --border: rgba(231, 201, 154, 0.2);
+  --gold: #e7c99a;
+  --gold-dim: #b88b56;
+  --cream: #fff8ee;
+  --muted: #aab5bf;
+  --accent: #56b8a3;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-gold: var(--gold);
+  --color-gold-dim: var(--gold-dim);
+  --color-cream: var(--cream);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+}
+
+body {
+  background:
+    linear-gradient(180deg, rgba(86, 184, 163, 0.08), transparent 32rem),
+    radial-gradient(ellipse 90% 60% at 50% -20%, rgba(231, 201, 154, 0.14), transparent),
+    var(--bg);
+  color: var(--cream);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: rgba(212, 175, 122, 0.35);
+  color: var(--bg);
+}
+
+.glass {
+  background: linear-gradient(135deg, rgba(31, 43, 53, 0.88), rgba(16, 20, 27, 0.78));
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #f4efe6 0%, #d4af7a 50%, #c9a66b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.btn-primary {
+  @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-2.5 font-medium transition disabled:pointer-events-none disabled:opacity-60;
+  background: linear-gradient(135deg, #f0d7ad, #c6975d);
+  color: #10141b;
+  box-shadow: 0 4px 24px rgba(231, 201, 154, 0.2);
+}
+.btn-primary:hover {
+  filter: brightness(1.06);
+  box-shadow: 0 6px 32px rgba(231, 201, 154, 0.28);
+}
+
+.btn-outline {
+  @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2.5 text-sm font-medium text-cream transition disabled:pointer-events-none disabled:opacity-60;
+}
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.input {
+  @apply w-full rounded-lg border border-[var(--border)] bg-bg-elevated px-4 py-3 text-cream placeholder:text-muted outline-none transition focus:border-gold focus:ring-1 focus:ring-gold/40;
+}
+
+.label {
+  @apply mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted;
+}

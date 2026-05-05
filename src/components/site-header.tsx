@@ -1,0 +1,141 @@
+import Link from "next/link";
+import { auth } from "@/auth";
+import { signOutAction } from "@/app/actions/auth";
+
+const destinationColumns = [
+  {
+    title: "Regions",
+    links: ["All Europe tours", "All Africa tours", "All Asia tours", "All Oceania tours", "Private custom tours"],
+  },
+  {
+    title: "Europe",
+    links: ["Italy", "Greece", "United Kingdom", "Ireland", "Spain", "France", "Portugal"],
+  },
+  {
+    title: "The Americas",
+    links: ["United States", "Canada", "Costa Rica", "Ecuador", "Peru", "Brazil", "Chile"],
+  },
+  {
+    title: "Africa",
+    links: ["Egypt", "Kenya", "South Africa", "Morocco", "Ghana", "Botswana", "Tanzania"],
+  },
+  {
+    title: "Asia & Oceania",
+    links: ["Thailand", "Japan", "South Korea", "India", "Bhutan", "Australia", "New Zealand"],
+  },
+];
+
+const publicTripsHref = "/login?callbackUrl=/trips";
+
+export async function SiteHeader() {
+  const session = await auth();
+  const tripsHref = session?.user ? "/trips" : publicTripsHref;
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-border/80 bg-bg/95 backdrop-blur">
+      <div className="border-b border-border/50 bg-bg-elevated/55">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-6 gap-y-2 px-4 py-2 text-xs text-muted sm:justify-end sm:px-6">
+          <Link href="/register" className="hover:text-cream">
+            Organize a private trip
+          </Link>
+          {!session?.user && (
+            <Link href="/login" className="hover:text-cream">
+              Log in / Register
+            </Link>
+          )}
+        </div>
+      </div>
+
+      <div className="mx-auto flex min-h-20 max-w-6xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
+        <Link href="/" className="flex items-center gap-3">
+          <span className="flex size-11 items-center justify-center rounded-lg border border-gold/40 bg-gold/10 font-display text-2xl text-gold">
+            PR
+          </span>
+          <span className="leading-none">
+            <span className="block font-display text-2xl tracking-tight text-cream">Prestige</span>
+            <span className="block text-xs font-semibold uppercase tracking-[0.28em] text-gold">Routes</span>
+          </span>
+        </Link>
+
+        <nav className="flex flex-1 flex-wrap items-center gap-2 text-sm lg:justify-center">
+          <div className="group">
+            <button className="rounded-lg px-3 py-2 text-cream transition hover:bg-surface/70" type="button">
+              Destinations <span className="ml-1 text-gold">v</span>
+            </button>
+            <div className="invisible absolute left-0 right-0 top-full border-t border-border bg-bg opacity-0 shadow-2xl shadow-black/30 transition group-hover:visible group-hover:opacity-100">
+              <div className="mx-auto grid max-w-6xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-5">
+                {destinationColumns.map((column) => (
+                  <div key={column.title}>
+                    <p className="font-semibold text-cream">{column.title}</p>
+                    <ul className="mt-5 space-y-4">
+                      {column.links.map((label) => (
+                        <li key={label}>
+                          <Link href={tripsHref} className="text-muted transition hover:text-gold">
+                            {label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <div className="mx-auto flex max-w-6xl justify-center border-t border-border px-4 py-5 sm:px-6">
+                <Link href={tripsHref} className="btn-primary">
+                  See all trips
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <Link href="#signature-trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-surface/70 hover:text-cream">
+            Travel styles
+          </Link>
+          <Link href="/register" className="rounded-lg px-3 py-2 text-muted transition hover:bg-surface/70 hover:text-cream">
+            Private planning
+          </Link>
+          <Link href="/#signature-trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-surface/70 hover:text-cream">
+            Travel deals
+          </Link>
+          <Link href="/#signature-trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-surface/70 hover:text-cream">
+            About us
+          </Link>
+        </nav>
+
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <form action={tripsHref} className="flex min-w-[220px] items-center rounded-full border border-border bg-bg-elevated px-4 py-2">
+            <input
+              name="q"
+              className="min-w-0 flex-1 bg-transparent text-sm text-cream outline-none placeholder:text-muted"
+              placeholder="Where to?"
+            />
+            <button className="ml-2 text-sm font-medium text-gold" type="submit">
+              Search
+            </button>
+          </form>
+
+          {session?.user ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <Link href="/account/bookings" className="rounded-lg px-3 py-2 text-sm text-muted transition hover:text-cream">
+                My bookings
+              </Link>
+              {session.user.role === "ADMIN" && (
+                <Link href="/admin" className="rounded-lg px-3 py-2 text-sm text-gold transition hover:text-cream">
+                  Admin
+                </Link>
+              )}
+              <form action={signOutAction}>
+                <button type="submit" className="rounded-lg px-3 py-2 text-sm text-muted transition hover:text-cream">
+                  Sign out
+                </button>
+              </form>
+            </div>
+          ) : (
+            <Link href="/login" className="btn-outline text-xs sm:text-sm">
+              Sign in
+            </Link>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+}
