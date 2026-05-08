@@ -26,3 +26,20 @@ npm.cmd run dev
 6. Use a **SQLite absolute path** for `DATABASE_URL` under your home directory, then `npx prisma db push`.
 
 Stripe webhook: `https://your-domain.com/api/webhooks/stripe`
+
+## Render
+
+This repo includes `render.yaml` for a Render Blueprint web service.
+
+1. Push this repo to GitHub.
+2. In Render, create a new **Blueprint** from the GitHub repository.
+3. Set the secret environment variables Render asks for:
+   - `AUTH_SECRET`
+   - `NEXT_PUBLIC_APP_URL`
+   - `AUTH_URL`
+   - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+   - `STRIPE_SECRET_KEY`
+   - `STRIPE_WEBHOOK_SECRET`
+4. Use the Render service URL or your custom domain for `NEXT_PUBLIC_APP_URL` and `AUTH_URL`.
+
+The blueprint mounts a persistent disk at `/var/data` and stores SQLite at `file:/var/data/prod.db`.
