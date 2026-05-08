@@ -7,7 +7,7 @@
     "build": "prisma generate && next build",
     "start": "next start -H 0.0.0.0",
     "lint": "eslint",
-    "render-build": "prisma generate && next build",
+    "render-build": "prisma generate && next build --webpack",
     "render-start": "prisma db push && next start -H 0.0.0.0",
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
