@@ -43,3 +43,5 @@ This repo includes `render.yaml` for a Render Blueprint web service.
 4. Use the Render service URL or your custom domain for `NEXT_PUBLIC_APP_URL` and `AUTH_URL`.
 
 The blueprint mounts a persistent disk at `/var/data` and stores SQLite at `file:/var/data/prod.db`.
+The Render build uses `npm ci`, runs Prisma generation/schema push, then builds Next.js. The start
+command binds Next to `0.0.0.0`, which is required for Render's web service routing.

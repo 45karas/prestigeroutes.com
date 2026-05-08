@@ -36,7 +36,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlideDTO[] }) {
           key={slide.id}
           className={[
             "absolute inset-0 transition-opacity duration-1000",
-            i === index ? "opacity-45" : "opacity-0",
+            i === index ? "opacity-60" : "opacity-0",
           ].join(" ")}
         >
           <Image
@@ -50,8 +50,8 @@ export function HeroCarousel({ slides }: { slides: HeroSlideDTO[] }) {
         </div>
       ))}
 
-      <div className="absolute inset-0 bg-gradient-to-r from-bg/95 via-bg/78 to-bg/30" />
-      <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/55 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-bg/92 via-bg/68 to-bg/18" />
+      <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/45 to-transparent" />
 
       <div className="absolute bottom-6 left-0 right-0 mx-auto hidden max-w-6xl items-end justify-between gap-6 px-4 sm:flex sm:px-6">
         <div className="flex items-center gap-2">

@@ -25,7 +25,7 @@ export function TripCard({ trip, priority }: { trip: TripCardTrip; priority?: bo
   const soldOut = left <= 0;
 
   return (
-    <article className="group overflow-hidden rounded-lg border border-border bg-surface/50 transition hover:-translate-y-0.5 hover:border-gold/50 hover:shadow-xl hover:shadow-black/20">
+    <article className="group overflow-hidden rounded-lg border border-border bg-cream/6 transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-cream/10 hover:shadow-xl hover:shadow-black/20">
       <Link href={`/trips/${trip.slug}`} className="block">
         <div className="relative aspect-[16/10] overflow-hidden bg-bg-elevated">
           <Image

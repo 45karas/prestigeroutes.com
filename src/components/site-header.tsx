@@ -32,11 +32,11 @@ export async function SiteHeader() {
   const tripsHref = session?.user ? "/trips" : publicTripsHref;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/80 bg-bg/95 backdrop-blur">
-      <div className="border-b border-border/50 bg-bg-elevated/55">
+    <header className="sticky top-0 z-50 border-b border-border/80 bg-bg/88 backdrop-blur-xl">
+      <div className="border-b border-border/50 bg-cream/5">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-6 gap-y-2 px-4 py-2 text-xs text-muted sm:justify-end sm:px-6">
           <Link href="/register" className="hover:text-cream">
-            Organize a private trip
+            Plan a private trip
           </Link>
           {!session?.user && (
             <Link href="/login" className="hover:text-cream">
@@ -48,21 +48,21 @@ export async function SiteHeader() {
 
       <div className="mx-auto flex min-h-20 max-w-6xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
         <Link href="/" className="flex items-center gap-3">
-          <span className="flex size-11 items-center justify-center rounded-lg border border-gold/40 bg-gold/10 font-display text-2xl text-gold">
+          <span className="flex size-11 items-center justify-center rounded-lg border border-gold/40 bg-cream/10 font-display text-2xl text-gold">
             PR
           </span>
           <span className="leading-none">
-            <span className="block font-display text-2xl tracking-tight text-cream">Prestige</span>
+            <span className="block font-display text-2xl text-cream">Prestige</span>
             <span className="block text-xs font-semibold uppercase tracking-[0.28em] text-gold">Routes</span>
           </span>
         </Link>
 
         <nav className="flex flex-1 flex-wrap items-center gap-2 text-sm lg:justify-center">
           <div className="group">
-            <button className="rounded-lg px-3 py-2 text-cream transition hover:bg-surface/70" type="button">
+            <button className="rounded-lg px-3 py-2 text-cream transition hover:bg-cream/10" type="button">
               Destinations <span className="ml-1 text-gold">v</span>
             </button>
-            <div className="invisible absolute left-0 right-0 top-full border-t border-border bg-bg opacity-0 shadow-2xl shadow-black/30 transition group-hover:visible group-hover:opacity-100">
+            <div className="invisible absolute left-0 right-0 top-full border-t border-border bg-bg/98 opacity-0 shadow-2xl shadow-black/30 backdrop-blur-xl transition group-hover:visible group-hover:opacity-100">
               <div className="mx-auto grid max-w-6xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-5">
                 {destinationColumns.map((column) => (
                   <div key={column.title}>
@@ -87,22 +87,22 @@ export async function SiteHeader() {
             </div>
           </div>
 
-          <Link href="#signature-trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-surface/70 hover:text-cream">
+          <Link href="#signature-trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
             Travel styles
           </Link>
-          <Link href="/register" className="rounded-lg px-3 py-2 text-muted transition hover:bg-surface/70 hover:text-cream">
+          <Link href="/register" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
             Private planning
           </Link>
-          <Link href="/#signature-trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-surface/70 hover:text-cream">
+          <Link href="/#signature-trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
             Travel deals
           </Link>
-          <Link href="/#signature-trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-surface/70 hover:text-cream">
+          <Link href="/#signature-trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
             About us
           </Link>
         </nav>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <form action={tripsHref} className="flex min-w-[220px] items-center rounded-full border border-border bg-bg-elevated px-4 py-2">
+          <form action={tripsHref} className="flex min-w-[220px] items-center rounded-lg border border-border bg-cream/5 px-4 py-2">
             <input
               name="q"
               className="min-w-0 flex-1 bg-transparent text-sm text-cream outline-none placeholder:text-muted"
