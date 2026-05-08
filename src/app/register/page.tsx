@@ -1,5 +1,6 @@
 "use client";
 
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -31,7 +32,18 @@ export default function RegisterPage() {
         setError(typeof data.error === "string" ? data.error : "Could not register.");
         return;
       }
-      router.push("/login?registered=1");
+      const login = await signIn("credentials", {
+        email: email.trim().toLowerCase(),
+        password,
+        redirect: false,
+      });
+      if (login?.error) {
+        setError("Account created, but automatic sign in failed. Please sign in.");
+        return;
+      }
+
+      const callbackUrl = new URLSearchParams(window.location.search).get("callbackUrl");
+      router.push(callbackUrl?.startsWith("/") ? callbackUrl : "/trips");
       router.refresh();
     } catch {
       setError("Network error.");
