@@ -34,6 +34,32 @@ const trustStats = [
   { value: "End-to-end", label: "Planning service" },
 ];
 
+function galleryGridClass(count: number) {
+  if (count <= 1) return "mt-12 grid gap-5";
+  if (count === 2) return "mt-12 grid gap-5 md:grid-cols-2";
+  if (count === 3) return "mt-12 grid gap-5 md:grid-cols-3";
+  return "mt-12 grid auto-rows-[220px] gap-5 md:grid-cols-6 lg:grid-cols-12";
+}
+
+function galleryItemClass(index: number, count: number) {
+  const base = "group relative overflow-hidden rounded-lg border border-border bg-cream/5 shadow-lg shadow-black/10";
+  if (count <= 1) return `${base} min-h-[320px] md:min-h-[520px]`;
+  if (count <= 3) return `${base} min-h-[280px] md:min-h-[420px]`;
+  if (index === 0) return `${base} md:col-span-4 md:row-span-2 lg:col-span-5`;
+  if (index === 1) return `${base} md:col-span-2 lg:col-span-4`;
+  if (index === 2) return `${base} md:col-span-2 lg:col-span-3`;
+  if (index === 3) return `${base} md:col-span-3 lg:col-span-4`;
+  if (index === 4) return `${base} md:col-span-3 lg:col-span-4`;
+  return `${base} md:col-span-2 lg:col-span-4`;
+}
+
+function galleryImageSizes(index: number, count: number) {
+  if (count <= 1) return "100vw";
+  if (count <= 3) return "(max-width: 768px) 100vw, 33vw";
+  if (index === 0) return "(max-width: 768px) 100vw, 42vw";
+  return "(max-width: 768px) 100vw, 28vw";
+}
+
 export default async function HomePage() {
   const now = new Date();
   const [slides, featured, galleryPhotos] = await Promise.all([
@@ -91,7 +117,7 @@ export default async function HomePage() {
             dates, interests, reservations, tickets, payments, and transfers.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <LinkNext href="#signature-trips" className="btn-primary">
+            <LinkNext href="/login?callbackUrl=/trips" className="btn-primary">
               Explore signature trips
             </LinkNext>
             <LinkNext href="/register" className="btn-ghost">
@@ -170,9 +196,9 @@ export default async function HomePage() {
           </p>
         </div>
 
-        <div className="mt-12 grid auto-rows-[170px] gap-4 sm:grid-cols-2 lg:grid-cols-6">
+        <div className={galleryGridClass(galleryPhotos.length)}>
           {galleryPhotos.length === 0 ? (
-            <div className="relative overflow-hidden rounded-lg border border-border bg-surface/40 sm:col-span-2 lg:col-span-6">
+            <div className="relative min-h-[420px] overflow-hidden rounded-lg border border-border bg-cream/5">
               <Image
                 src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80"
                 alt=""
@@ -186,22 +212,16 @@ export default async function HomePage() {
             galleryPhotos.map((photo, index) => (
               <figure
                 key={photo.id}
-                className={[
-                  "group relative overflow-hidden rounded-lg border border-border bg-surface/40",
-                  index === 0 ? "sm:col-span-2 sm:row-span-2 lg:col-span-3" : "",
-                  index === 1 ? "lg:col-span-3" : "",
-                  index === 4 ? "lg:col-span-2" : "",
-                  index === 5 ? "lg:col-span-2" : "",
-                  index === 6 ? "lg:col-span-2" : "",
-                ].join(" ")}
+                className={galleryItemClass(index, galleryPhotos.length)}
               >
                 <Image
                   src={photo.imageUrl}
                   alt=""
                   fill
-                  sizes={index === 0 ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 50vw, 25vw"}
+                  sizes={galleryImageSizes(index, galleryPhotos.length)}
                   className="object-cover transition duration-500 group-hover:scale-[1.03]"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-bg/45 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
               </figure>
             ))
           )}
@@ -234,7 +254,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="signature-trips" className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.18em] text-gold">Bookable journeys</p>

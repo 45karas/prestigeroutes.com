@@ -60,7 +60,7 @@ export async function SiteHeader() {
         <nav className="flex flex-1 flex-wrap items-center gap-2 text-sm lg:justify-center">
           <div className="group">
             <button className="rounded-lg px-3 py-2 text-cream transition hover:bg-cream/10" type="button">
-              Destinations <span className="ml-1 text-gold">v</span>
+              Destinations
             </button>
             <div className="invisible absolute left-0 right-0 top-full border-t border-border bg-bg/98 opacity-0 shadow-2xl shadow-black/30 backdrop-blur-xl transition group-hover:visible group-hover:opacity-100">
               <div className="mx-auto grid max-w-6xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-5">
@@ -87,16 +87,16 @@ export async function SiteHeader() {
             </div>
           </div>
 
-          <Link href="#signature-trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
+          <Link href="/login?callbackUrl=/trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
             Travel styles
           </Link>
           <Link href="/register" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
             Private planning
           </Link>
-          <Link href="/#signature-trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
+          <Link href="/login?callbackUrl=/trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
             Travel deals
           </Link>
-          <Link href="/#signature-trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
+          <Link href="/" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
             About us
           </Link>
         </nav>
