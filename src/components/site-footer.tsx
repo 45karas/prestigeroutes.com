@@ -1,5 +1,10 @@
 import Link from "next/link";
 
+const supportEmail = "prestigeroutes@chrietzbergphoto.com";
+const supportHref = `mailto:${supportEmail}?subject=${encodeURIComponent(
+  "Prestige Routes inquiry",
+)}&body=${encodeURIComponent("Hello Prestige Routes,\n\nI would like help with ")}`;
+
 export function SiteFooter() {
   return (
     <footer className="mt-auto border-t border-border bg-bg-elevated/70">
@@ -29,8 +34,8 @@ export function SiteFooter() {
         <div className="text-sm">
           <p className="font-medium text-cream">Service</p>
           <p className="mt-3 text-muted">Custom routes, curated departures, reservations, transfers, and checkout.</p>
-          <a className="mt-3 block text-gold hover:text-cream" href="mailto:prestigeroutes@chrietzbergphoto.com">
-            prestigeroutes@chrietzbergphoto.com
+          <a className="mt-3 block text-gold hover:text-cream" href={supportHref}>
+            {supportEmail}
           </a>
         </div>
       </div>
