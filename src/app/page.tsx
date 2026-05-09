@@ -107,32 +107,37 @@ export default async function HomePage() {
           </div>
         )}
 
-        <div className="relative mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col justify-center px-4 pb-28 pt-16 sm:px-6 sm:pb-36">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-gold">Prestige Routes</p>
-          <h1 className="mt-4 max-w-4xl font-display text-4xl leading-tight text-cream sm:text-5xl md:text-6xl lg:text-7xl">
-            Private travel, polished routes, and memorable places without the planning drag.
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">
-            Book a curated departure or let Prestige Routes build a personal itinerary around your
-            dates, interests, reservations, tickets, payments, and transfers.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <LinkNext href="/login?callbackUrl=/trips" className="btn-primary">
-              Explore signature trips
-            </LinkNext>
-            <LinkNext href="/register" className="btn-ghost">
-              Start private planning
-            </LinkNext>
+        <div className="relative mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col px-4 pb-28 pt-16 sm:px-6 sm:pb-36">
+          <div className="flex flex-1 flex-col justify-center">
+            <p className="text-sm font-medium uppercase tracking-[0.2em] text-gold">Prestige Routes</p>
+            <h1 className="mt-4 max-w-4xl font-display text-4xl leading-tight text-cream sm:text-5xl md:text-6xl lg:text-7xl">
+              Private travel, polished routes, and memorable places without the planning drag.
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">
+              Book a curated departure or let Prestige Routes build a personal itinerary around your
+              dates, interests, reservations, tickets, payments, and transfers.
+            </p>
           </div>
 
-          <dl className="mt-10 grid max-w-3xl gap-3 sm:grid-cols-3">
-            {trustStats.map((stat) => (
-              <div key={stat.label} className="border-l border-cream/25 pl-4">
-                <dt className="font-display text-2xl text-cream">{stat.value}</dt>
-                <dd className="mt-1 text-xs uppercase tracking-[0.16em] text-muted">{stat.label}</dd>
-              </div>
-            ))}
-          </dl>
+          <div className="mt-10">
+            <div className="flex flex-wrap items-center gap-4">
+              <LinkNext href="/login?callbackUrl=/trips" className="btn-primary">
+                Explore signature trips
+              </LinkNext>
+              <LinkNext href="/register" className="btn-ghost">
+                Start private planning
+              </LinkNext>
+            </div>
+
+            <dl className="mt-8 grid max-w-3xl gap-3 sm:grid-cols-3">
+              {trustStats.map((stat) => (
+                <div key={stat.label} className="border-l border-cream/25 pl-4">
+                  <dt className="font-display text-2xl text-cream">{stat.value}</dt>
+                  <dd className="mt-1 text-xs uppercase tracking-[0.16em] text-muted">{stat.label}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
 
           {featured.length > 0 && (
             <div className="mt-8 max-w-4xl rounded-lg border border-border bg-bg/60 px-4 py-4 backdrop-blur">
