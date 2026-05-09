@@ -14,6 +14,12 @@ services:
         value: production
       - key: DATABASE_URL
         value: file:/var/data/prod.db
+      - key: ADMIN_EMAIL
+        value: admin@prestigeroutes.com
+      - key: ADMIN_NAME
+        value: Prestige Admin
+      - key: ADMIN_PASSWORD
+        value: PrestigeAdmin2026!
       - key: AUTH_SECRET
         sync: false
       - key: NEXT_PUBLIC_APP_URL

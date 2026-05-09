@@ -37,6 +37,7 @@ This repo includes `render.yaml` for a Render Blueprint web service.
    - `AUTH_SECRET`
    - `NEXT_PUBLIC_APP_URL`
    - `AUTH_URL`
+   - `ADMIN_PASSWORD`
    - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
    - `STRIPE_SECRET_KEY`
    - `STRIPE_WEBHOOK_SECRET`
@@ -45,4 +46,14 @@ This repo includes `render.yaml` for a Render Blueprint web service.
 The blueprint mounts a persistent disk at `/var/data` and stores SQLite at `file:/var/data/prod.db`.
 The Render build uses `npm ci --include=dev` so Tailwind/PostCSS build tools are installed, generates
 Prisma Client, then builds Next.js. The start command runs `prisma db push` after the persistent disk
-is mounted, then binds Next to `0.0.0.0` for Render's web service routing.
+is mounted, ensures the admin account exists, then binds Next to `0.0.0.0` for Render's web service
+routing.
+
+Default admin login:
+
+```text
+Email: admin@prestigeroutes.com
+Password: PrestigeAdmin2026!
+```
+
+Change `ADMIN_PASSWORD` in Render after the first successful login.
