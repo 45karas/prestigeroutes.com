@@ -28,12 +28,6 @@ const travelStyles = [
   "Milestone trips",
 ];
 
-const trustStats = [
-  { value: "24/7", label: "Trip support" },
-  { value: "4", label: "Featured departures" },
-  { value: "End-to-end", label: "Planning service" },
-];
-
 function galleryGridClass(count: number) {
   if (count <= 1) return "mt-12 grid gap-5";
   if (count === 2) return "mt-12 grid gap-5 md:grid-cols-2";
@@ -117,26 +111,6 @@ export default async function HomePage() {
               Book a curated departure or let Prestige Routes build a personal itinerary around your
               dates, interests, reservations, tickets, payments, and transfers.
             </p>
-          </div>
-
-          <div className="mt-10">
-            <div className="flex flex-wrap items-center gap-4">
-              <LinkNext href="/login?callbackUrl=/trips" className="btn-primary">
-                Explore signature trips
-              </LinkNext>
-              <LinkNext href="/register" className="btn-ghost">
-                Start private planning
-              </LinkNext>
-            </div>
-
-            <dl className="mt-8 grid max-w-3xl gap-3 sm:grid-cols-3">
-              {trustStats.map((stat) => (
-                <div key={stat.label} className="border-l border-cream/25 pl-4">
-                  <dt className="font-display text-2xl text-cream">{stat.value}</dt>
-                  <dd className="mt-1 text-xs uppercase tracking-[0.16em] text-muted">{stat.label}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
 
           {featured.length > 0 && (
