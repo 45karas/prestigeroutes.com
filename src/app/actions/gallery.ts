@@ -19,6 +19,10 @@ const allowedImageTypes = new Map([
   ["image/gif", "gif"],
 ]);
 
+function galleryUploadDir() {
+  return path.join(process.env.UPLOAD_DIR || path.join(process.cwd(), "public", "uploads"), "gallery");
+}
+
 async function saveGalleryUpload(file: File | null, required: boolean) {
   if (!file || file.size === 0) {
     if (required) redirect("/admin/gallery/new?error=" + encodeURIComponent("Choose a photo to upload."));
@@ -32,7 +36,7 @@ async function saveGalleryUpload(file: File | null, required: boolean) {
     redirect("/admin/gallery/new?error=" + encodeURIComponent("Photo must be 8 MB or smaller."));
   }
 
-  const uploadDir = path.join(process.cwd(), "public", "uploads", "gallery");
+  const uploadDir = galleryUploadDir();
   await mkdir(uploadDir, { recursive: true });
   const safeName = file.name
     .replace(/\.[^.]+$/, "")
