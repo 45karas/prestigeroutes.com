@@ -18,6 +18,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <nav className="mt-6 grid grid-cols-2 gap-2 text-sm lg:grid-cols-1">
           {[
             ["Overview", "/admin"],
+            ["Bookings", "/admin/bookings"],
+            ["Users", "/admin/users"],
             ["Trips", "/admin/trips"],
             ["Gallery", "/admin/gallery"],
             ["Homepage slides", "/admin/slides"],

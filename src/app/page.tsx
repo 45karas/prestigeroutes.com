@@ -258,20 +258,24 @@ export default async function HomePage() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.18em] text-gold">Bookable journeys</p>
-            <h2 className="mt-3 font-display text-3xl text-cream sm:text-4xl">Signature trips</h2>
-            <p className="mt-2 max-w-xl text-muted">
-              Curated journeys available on the main page. Sign in to browse every departure,
-              reserve seats, and manage confirmations from your account.
+            <h2 className="mt-3 font-display text-3xl text-cream sm:text-4xl">Signature journeys</h2>
+            <p className="mt-2 max-w-2xl text-muted">
+              Carefully arranged travel experiences for guests who want clear planning, reliable
+              coordination, and memorable destinations handled with care. Choose an available
+              departure or ask our team to design a private route around your dates, group, and
+              preferred places.
             </p>
           </div>
-          <LinkNext href="/login?callbackUrl=/trips" className="btn-outline self-start sm:self-auto">
-            See more after sign in
-          </LinkNext>
         </div>
         <div className="mt-12 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
           {featured.length === 0 ? (
-            <div className="rounded-lg border border-border bg-surface/40 p-8 text-muted sm:col-span-2 xl:col-span-4">
-              Signature trips are being prepared.
+            <div className="rounded-lg border border-border bg-cream/5 p-8 text-muted sm:col-span-2 xl:col-span-4">
+              <h3 className="font-display text-2xl text-cream">Private planning is open.</h3>
+              <p className="mt-3 max-w-2xl leading-7">
+                Public departures are being selected with care. In the meantime, Prestige Routes can
+                arrange a private itinerary with reservations, transfers, activities, and travel
+                timing shaped around your plans.
+              </p>
             </div>
           ) : (
             featured.map((trip, i) => <TripCard key={trip.id} trip={trip} priority={i < 2} />)

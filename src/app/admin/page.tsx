@@ -1,21 +1,25 @@
 import Link from "next/link";
+import { formatUsd } from "@/lib/money";
 import { prisma } from "@/lib/prisma";
 
-function formatUsd(cents: number) {
-  return (cents / 100).toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-  });
-}
-
 export default async function AdminHomePage() {
-  const [tripCount, liveTripCount, galleryCount, slideCount, bookingCount, revenue, upcomingTrips] = await Promise.all([
+  const [
+    tripCount,
+    liveTripCount,
+    userCount,
+    customerCount,
+    bookingCount,
+    pendingBookingCount,
+    revenue,
+    upcomingTrips,
+    recentBookings,
+  ] = await Promise.all([
     prisma.trip.count(),
     prisma.trip.count({ where: { published: true, startDate: { gte: new Date() } } }),
-    prisma.galleryPhoto.count({ where: { published: true } }),
-    prisma.heroSlide.count({ where: { published: true } }),
+    prisma.user.count(),
+    prisma.user.count({ where: { role: "USER" } }),
     prisma.booking.count({ where: { status: "PAID" } }),
+    prisma.booking.count({ where: { status: "PENDING" } }),
     prisma.booking.aggregate({
       where: { status: "PAID" },
       _sum: { totalCents: true },
@@ -24,6 +28,14 @@ export default async function AdminHomePage() {
       where: { startDate: { gte: new Date() } },
       orderBy: { startDate: "asc" },
       take: 4,
+    }),
+    prisma.booking.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      include: {
+        trip: { select: { title: true, destination: true } },
+        user: { select: { email: true, name: true } },
+      },
     }),
   ]);
 
@@ -49,13 +61,14 @@ export default async function AdminHomePage() {
         </div>
       </div>
 
-      <dl className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <dl className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-6">
         {[
           ["Total trips", tripCount],
           ["Live upcoming", liveTripCount],
-          ["Gallery photos", galleryCount],
-          ["Hero slides", slideCount],
+          ["Users", userCount],
+          ["Customers", customerCount],
           ["Paid bookings", bookingCount],
+          ["Pending", pendingBookingCount],
         ].map(([label, value]) => (
           <div key={label} className="rounded-lg border border-border bg-surface/40 px-5 py-4">
             <dt className="text-xs uppercase tracking-wider text-muted">{label}</dt>
@@ -106,6 +119,53 @@ export default async function AdminHomePage() {
           </p>
         </section>
       </div>
+
+      <section className="mt-8 rounded-lg border border-border bg-surface/35">
+        <div className="flex items-center justify-between border-b border-border/60 px-5 py-4">
+          <h2 className="font-display text-2xl text-cream">Recent bookings</h2>
+          <Link href="/admin/bookings" className="text-sm font-medium text-gold hover:text-cream">
+            View all bookings
+          </Link>
+        </div>
+        <div className="divide-y divide-border/50">
+          {recentBookings.length === 0 ? (
+            <p className="px-5 py-8 text-muted">No bookings yet.</p>
+          ) : (
+            recentBookings.map((booking) => (
+              <div key={booking.id} className="grid gap-3 px-5 py-4 lg:grid-cols-[1fr_180px_120px] lg:items-center">
+                <div>
+                  <p className="font-medium text-cream">{booking.trip.title}</p>
+                  <p className="mt-1 text-sm text-muted">
+                    {booking.user.name || booking.user.email} / {booking.trip.destination}
+                  </p>
+                </div>
+                <p className="text-sm text-muted">
+                  {booking.createdAt.toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </p>
+                <div className="flex items-center justify-between gap-3 lg:justify-end">
+                  <span
+                    className={[
+                      "rounded-lg px-2.5 py-1 text-xs font-medium",
+                      booking.status === "PAID"
+                        ? "bg-accent/15 text-accent"
+                        : booking.status === "PENDING"
+                          ? "bg-gold/15 text-gold"
+                          : "bg-red-500/15 text-red-200",
+                    ].join(" ")}
+                  >
+                    {booking.status}
+                  </span>
+                  <span className="text-sm font-medium text-cream">{formatUsd(booking.totalCents)}</span>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
     </div>
   );
 }
