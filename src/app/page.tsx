@@ -56,7 +56,7 @@ function galleryImageSizes(index: number, count: number) {
 
 export default async function HomePage() {
   const now = new Date();
-  const [slides, featured, galleryPhotos] = await Promise.all([
+  const [slides, featured, galleryPhotos, travelDeals] = await Promise.all([
     prisma.heroSlide.findMany({
       where: { published: true },
       orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
@@ -71,6 +71,11 @@ export default async function HomePage() {
       where: { published: true },
       orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
       take: 9,
+    }),
+    prisma.travelDeal.findMany({
+      where: { published: true },
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+      take: 6,
     }),
   ]);
 
@@ -230,6 +235,62 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="travel-deals" className="mx-auto max-w-6xl scroll-mt-32 px-4 py-20 sm:px-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-medium uppercase tracking-[0.18em] text-gold">Travel deals</p>
+            <h2 className="mt-3 font-display text-3xl text-cream sm:text-4xl">Current offers and private trip ideas</h2>
+            <p className="mt-3 max-w-2xl text-muted">
+              Explore featured travel opportunities curated by Prestige Routes. Each offer can be
+              tailored with planning support, reservations, transfers, and timing around your group.
+            </p>
+          </div>
+          <LinkNext href="/register" className="btn-outline self-start sm:self-auto">
+            Plan a private trip
+          </LinkNext>
+        </div>
+
+        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {travelDeals.length === 0 ? (
+            <div className="rounded-lg border border-border bg-cream/5 p-8 text-muted md:col-span-2 xl:col-span-3">
+              <h3 className="font-display text-2xl text-cream">Custom travel deals are available by request.</h3>
+              <p className="mt-3 max-w-2xl leading-7">
+                Contact Prestige Routes to shape a private offer around your destination, dates,
+                guests, and budget. Public deals added by the team will appear here.
+              </p>
+            </div>
+          ) : (
+            travelDeals.map((deal, index) => (
+              <article
+                key={deal.id}
+                className="group overflow-hidden rounded-lg border border-border bg-cream/5 transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-cream/10"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-bg-elevated">
+                  <Image
+                    src={deal.imageUrl}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                    priority={index < 2}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-bg/70 via-transparent to-transparent" />
+                </div>
+                <div className="p-5">
+                  <h3 className="font-display text-2xl text-cream">{deal.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-muted">{deal.description}</p>
+                  {deal.ctaText && deal.ctaHref && (
+                    <LinkNext href={deal.ctaHref} className="mt-5 inline-flex text-sm font-medium text-gold hover:text-cream">
+                      {deal.ctaText}
+                    </LinkNext>
+                  )}
+                </div>
+              </article>
+            ))
+          )}
         </div>
       </section>
 

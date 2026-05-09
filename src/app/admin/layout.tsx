@@ -21,6 +21,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             ["Bookings", "/admin/bookings"],
             ["Users", "/admin/users"],
             ["Trips", "/admin/trips"],
+            ["Travel deals", "/admin/deals"],
             ["Gallery", "/admin/gallery"],
             ["Homepage slides", "/admin/slides"],
           ].map(([label, href]) => (

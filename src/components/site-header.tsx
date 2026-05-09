@@ -81,6 +81,9 @@ export async function SiteHeader() {
               <Link href="/admin/trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
                 Trips
               </Link>
+              <Link href="/admin/deals" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
+                Deals
+              </Link>
             </>
           ) : (
             <>
@@ -113,13 +116,10 @@ export async function SiteHeader() {
                 </div>
               </div>
 
-              <Link href="/login?callbackUrl=/trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
-                Travel styles
-              </Link>
               <Link href="/register" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
                 Private planning
               </Link>
-              <Link href="/login?callbackUrl=/trips" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
+              <Link href="/#travel-deals" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
                 Travel deals
               </Link>
               <Link href="/" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
