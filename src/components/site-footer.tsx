@@ -29,6 +29,9 @@ export function SiteFooter() {
         <div className="text-sm">
           <p className="font-medium text-cream">Service</p>
           <p className="mt-3 text-muted">Custom routes, curated departures, reservations, transfers, and checkout.</p>
+          <a className="mt-3 block text-gold hover:text-cream" href="mailto:prestigeroutes@chrietzbergphoto.com">
+            prestigeroutes@chrietzbergphoto.com
+          </a>
         </div>
       </div>
       <div className="border-t border-border/60 py-4 text-center text-xs text-muted">

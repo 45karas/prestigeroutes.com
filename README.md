@@ -2,6 +2,8 @@
 
 Next.js site for tours, accounts, Stripe checkout, and an admin panel.
 
+Support email: `prestigeroutes@chrietzbergphoto.com`
+
 ## Local
 
 ```bash
