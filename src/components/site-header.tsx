@@ -1,38 +1,17 @@
 import Link from "next/link";
 import { headers } from "next/headers";
-import { auth } from "@/auth";
 import { signOutAction } from "@/app/actions/auth";
+import { auth } from "@/auth";
 
-const destinationColumns = [
-  {
-    title: "Regions",
-    links: ["All Europe tours", "All Africa tours", "All Asia tours", "All Oceania tours", "Private custom tours"],
-  },
-  {
-    title: "Europe",
-    links: ["Italy", "Greece", "United Kingdom", "Ireland", "Spain", "France", "Portugal"],
-  },
-  {
-    title: "The Americas",
-    links: ["United States", "Canada", "Costa Rica", "Ecuador", "Peru", "Brazil", "Chile"],
-  },
-  {
-    title: "Africa",
-    links: ["Egypt", "Kenya", "South Africa", "Morocco", "Ghana", "Botswana", "Tanzania"],
-  },
-  {
-    title: "Asia & Oceania",
-    links: ["Thailand", "Japan", "South Korea", "India", "Bhutan", "Australia", "New Zealand"],
-  },
-];
-
-const publicTripsHref = "/login?callbackUrl=/trips";
+const supportEmail = "prestigeroutes@chrietzbergphoto.com";
+const supportHref = `mailto:${supportEmail}?subject=${encodeURIComponent(
+  "Private trip planning",
+)}&body=${encodeURIComponent("Hello Prestige Routes,\n\nI would like help planning a private trip to ")}`;
 
 export async function SiteHeader() {
   const session = await auth();
   const pathname = (await headers()).get("x-pathname") || "/";
   const isAdminArea = pathname.startsWith("/admin");
-  const tripsHref = session?.user ? "/trips" : publicTripsHref;
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/80 bg-bg/88 backdrop-blur-xl">
@@ -43,9 +22,9 @@ export async function SiteHeader() {
               View public site
             </Link>
           ) : (
-            <Link href="/register" className="hover:text-cream">
+            <a href={supportHref} className="hover:text-cream">
               Plan a private trip
-            </Link>
+            </a>
           )}
           {!session?.user && !isAdminArea && (
             <Link href="/login" className="hover:text-cream">
@@ -87,42 +66,16 @@ export async function SiteHeader() {
             </>
           ) : (
             <>
-              <div className="group">
-                <button className="rounded-lg px-3 py-2 text-cream transition hover:bg-cream/10" type="button">
-                  Destinations
-                </button>
-                <div className="invisible absolute left-0 right-0 top-full border-t border-border bg-bg/98 opacity-0 shadow-2xl shadow-black/30 backdrop-blur-xl transition group-hover:visible group-hover:opacity-100">
-                  <div className="mx-auto grid max-w-6xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-5">
-                    {destinationColumns.map((column) => (
-                      <div key={column.title}>
-                        <p className="font-semibold text-cream">{column.title}</p>
-                        <ul className="mt-5 space-y-4">
-                          {column.links.map((label) => (
-                            <li key={label}>
-                              <Link href={tripsHref} className="text-muted transition hover:text-gold">
-                                {label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mx-auto flex max-w-6xl justify-center border-t border-border px-4 py-5 sm:px-6">
-                    <Link href={tripsHref} className="btn-primary">
-                      See all trips
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <Link href="/register" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
-                Private planning
+              <Link href="/#destinations" className="rounded-lg px-3 py-2 text-cream transition hover:bg-cream/10">
+                Destinations
               </Link>
+              <a href={supportHref} className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
+                Private planning
+              </a>
               <Link href="/#travel-deals" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
                 Travel deals
               </Link>
-              <Link href="/" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
+              <Link href="/#about-us" className="rounded-lg px-3 py-2 text-muted transition hover:bg-cream/10 hover:text-cream">
                 About us
               </Link>
             </>
@@ -130,19 +83,6 @@ export async function SiteHeader() {
         </nav>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          {!isAdminArea && (
-            <form action={tripsHref} className="flex min-w-[220px] items-center rounded-lg border border-border bg-cream/5 px-4 py-2">
-              <input
-                name="q"
-                className="min-w-0 flex-1 bg-transparent text-sm text-cream outline-none placeholder:text-muted"
-                placeholder="Where to?"
-              />
-              <button className="ml-2 text-sm font-medium text-gold" type="submit">
-                Search
-              </button>
-            </form>
-          )}
-
           {session?.user ? (
             <div className="flex flex-wrap items-center gap-2">
               {!isAdminArea && (

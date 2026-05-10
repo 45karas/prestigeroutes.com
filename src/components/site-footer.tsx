@@ -25,9 +25,9 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link href="/register" className="hover:text-gold">
+              <a href={supportHref} className="hover:text-gold">
                 Private planning
-              </Link>
+              </a>
             </li>
           </ul>
         </div>

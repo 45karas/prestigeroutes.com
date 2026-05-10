@@ -19,41 +19,6 @@ const planningSteps = [
   },
 ];
 
-const travelStyles = [
-  "Private escapes",
-  "Culture-first routes",
-  "Family visits",
-  "Group departures",
-  "Event travel",
-  "Milestone trips",
-];
-
-function galleryGridClass(count: number) {
-  if (count <= 1) return "mt-12 grid gap-5";
-  if (count === 2) return "mt-12 grid gap-5 md:grid-cols-2";
-  if (count === 3) return "mt-12 grid gap-5 md:grid-cols-3";
-  return "mt-12 grid auto-rows-[220px] gap-5 md:grid-cols-6 lg:grid-cols-12";
-}
-
-function galleryItemClass(index: number, count: number) {
-  const base = "group relative overflow-hidden rounded-lg border border-border bg-cream/5 shadow-lg shadow-black/10";
-  if (count <= 1) return `${base} min-h-[320px] md:min-h-[520px]`;
-  if (count <= 3) return `${base} min-h-[280px] md:min-h-[420px]`;
-  if (index === 0) return `${base} md:col-span-4 md:row-span-2 lg:col-span-5`;
-  if (index === 1) return `${base} md:col-span-2 lg:col-span-4`;
-  if (index === 2) return `${base} md:col-span-2 lg:col-span-3`;
-  if (index === 3) return `${base} md:col-span-3 lg:col-span-4`;
-  if (index === 4) return `${base} md:col-span-3 lg:col-span-4`;
-  return `${base} md:col-span-2 lg:col-span-4`;
-}
-
-function galleryImageSizes(index: number, count: number) {
-  if (count <= 1) return "100vw";
-  if (count <= 3) return "(max-width: 768px) 100vw, 33vw";
-  if (index === 0) return "(max-width: 768px) 100vw, 42vw";
-  return "(max-width: 768px) 100vw, 28vw";
-}
-
 export default async function HomePage() {
   const now = new Date();
   const [slides, featured, galleryPhotos, travelDeals] = await Promise.all([
@@ -146,23 +111,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="border-b border-border bg-bg-elevated/45 py-8">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
-          <p className="max-w-2xl text-sm leading-6 text-muted">
-            Full-service tourism for travelers who want the experience handled properly:
-            reservations, entry tickets, payments, transfers, and hosted planning.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {travelStyles.map((style) => (
-              <span key={style} className="rounded-lg border border-border bg-cream/5 px-3 py-2 text-xs text-cream">
-                {style}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+      <section id="destinations" className="mx-auto max-w-6xl scroll-mt-32 px-4 py-20 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.18em] text-gold">Start with inspiration</p>
@@ -180,9 +129,9 @@ export default async function HomePage() {
           </p>
         </div>
 
-        <div className={galleryGridClass(galleryPhotos.length)}>
+        <div className="mt-12 grid gap-5 md:grid-cols-3">
           {galleryPhotos.length === 0 ? (
-            <div className="relative min-h-[420px] overflow-hidden rounded-lg border border-border bg-cream/5">
+            <div className="relative min-h-[420px] overflow-hidden rounded-lg border border-border bg-cream/5 md:col-span-3">
               <Image
                 src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80"
                 alt=""
@@ -196,14 +145,15 @@ export default async function HomePage() {
             galleryPhotos.map((photo, index) => (
               <figure
                 key={photo.id}
-                className={galleryItemClass(index, galleryPhotos.length)}
+                className="group relative aspect-[4/3] overflow-hidden rounded-lg border border-border bg-cream/5 shadow-lg shadow-black/10"
               >
                 <Image
                   src={photo.imageUrl}
                   alt=""
                   fill
-                  sizes={galleryImageSizes(index, galleryPhotos.length)}
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                  priority={index < 3}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-bg/45 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
               </figure>
@@ -239,31 +189,15 @@ export default async function HomePage() {
       </section>
 
       <section id="travel-deals" className="mx-auto max-w-6xl scroll-mt-32 px-4 py-20 sm:px-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.18em] text-gold">Travel deals</p>
-            <h2 className="mt-3 font-display text-3xl text-cream sm:text-4xl">Current offers and private trip ideas</h2>
-            <p className="mt-3 max-w-2xl text-muted">
-              Explore featured travel opportunities curated by Prestige Routes. Each offer can be
-              tailored with planning support, reservations, transfers, and timing around your group.
-            </p>
+            <h2 className="mt-3 font-display text-3xl text-cream sm:text-4xl">Featured trips and offers</h2>
           </div>
-          <LinkNext href="/register" className="btn-outline self-start sm:self-auto">
-            Plan a private trip
-          </LinkNext>
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {travelDeals.length === 0 ? (
-            <div className="rounded-lg border border-border bg-cream/5 p-8 text-muted md:col-span-2 xl:col-span-3">
-              <h3 className="font-display text-2xl text-cream">Custom travel deals are available by request.</h3>
-              <p className="mt-3 max-w-2xl leading-7">
-                Contact Prestige Routes to shape a private offer around your destination, dates,
-                guests, and budget. Public deals added by the team will appear here.
-              </p>
-            </div>
-          ) : (
-            travelDeals.map((deal, index) => (
+          {travelDeals.map((deal, index) => (
               <article
                 key={deal.id}
                 className="group overflow-hidden rounded-lg border border-border bg-cream/5 transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-cream/10"
@@ -289,8 +223,7 @@ export default async function HomePage() {
                   )}
                 </div>
               </article>
-            ))
-          )}
+          ))}
         </div>
       </section>
 
@@ -323,13 +256,18 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="border-y border-border bg-bg-elevated/45 py-20">
+      <section id="about-us" className="scroll-mt-32 border-y border-border bg-bg-elevated/45 py-20">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="text-sm font-medium uppercase tracking-[0.18em] text-accent">Why travelers book</p>
+            <p className="text-sm font-medium uppercase tracking-[0.18em] text-accent">About Prestige Routes</p>
             <h2 className="mt-3 font-display text-3xl text-cream sm:text-4xl">
-              Planned for the parts of travel that usually get complicated.
+              Best tours, private routes, and trusted travel planning.
             </h2>
+            <p className="mt-4 text-muted">
+              Prestige Routes helps travelers book memorable tours and private trips with the
+              important details handled clearly: destination planning, reservations, transfers,
+              payments, timing, and support before travel.
+            </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-3">
             {[
