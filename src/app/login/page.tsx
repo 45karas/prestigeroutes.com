@@ -17,7 +17,7 @@ export default async function LoginPage({
           Account created. You can sign in now.
         </p>
       )}
-      <LoginForm callbackUrl={sp.callbackUrl ?? "/"} />
+      <LoginForm callbackUrl={sp.callbackUrl ?? "/trips"} />
     </div>
   );
 }

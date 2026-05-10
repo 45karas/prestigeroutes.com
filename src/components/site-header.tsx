@@ -12,6 +12,7 @@ export async function SiteHeader() {
   const session = await auth();
   const pathname = (await headers()).get("x-pathname") || "/";
   const isAdminArea = pathname.startsWith("/admin");
+  const isCustomerArea = Boolean(session?.user && session.user.role !== "ADMIN" && !isAdminArea);
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/80 bg-bg/88 backdrop-blur-xl">
@@ -20,6 +21,10 @@ export async function SiteHeader() {
           {isAdminArea ? (
             <Link href="/" className="hover:text-cream">
               View public site
+            </Link>
+          ) : isCustomerArea ? (
+            <Link href="/trips" className="hover:text-cream">
+              Browse trips
             </Link>
           ) : (
             <a href={supportHref} className="hover:text-cream">
@@ -64,6 +69,10 @@ export async function SiteHeader() {
                 Deals
               </Link>
             </>
+          ) : isCustomerArea ? (
+            <Link href="/trips" className="rounded-lg px-3 py-2 text-cream transition hover:bg-cream/10">
+              Trips
+            </Link>
           ) : (
             <>
               <Link href="/#destinations" className="rounded-lg px-3 py-2 text-cream transition hover:bg-cream/10">
